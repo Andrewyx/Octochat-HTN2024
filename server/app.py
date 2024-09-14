@@ -27,7 +27,7 @@ if __name__ == '__main__':
     app.run(use_reloader=True, port=5525, threaded=True, host="0.0.0.0", debug=True)
     
 
-def delete_files_from_voiceflow(document_ids: [str]) -> None:
+def delete_files_from_voiceflow(document_ids: list[str]) -> None:
     # get the API key from the .env file
     dotenv.load_dotenv()
     VOICEFLOW_API_KEY = os.getenv('VOICEFLOW_API_KEY')
@@ -44,7 +44,7 @@ def delete_files_from_voiceflow(document_ids: [str]) -> None:
         response_data = response.json()
         print(response_data)
 
-def upload_files_to_voiceflow(directory: str) -> [str]:
+def upload_files_to_voiceflow(directory: str) -> list[str]:
     # get the API key from the .env file
     dotenv.load_dotenv()
     VOICEFLOW_API_KEY = os.getenv('VOICEFLOW_API_KEY')
@@ -80,7 +80,7 @@ def upload_files_to_voiceflow(directory: str) -> [str]:
     return responses
 
 
-def get_list_of_documents() -> [str]:
+def get_list_of_documents() -> list[str]:
     # get the API key from the .env file
     dotenv.load_dotenv()
     VOICEFLOW_API_KEY = os.getenv('VOICEFLOW_API_KEY')

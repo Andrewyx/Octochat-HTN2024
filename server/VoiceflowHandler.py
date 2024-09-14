@@ -1,6 +1,7 @@
 import pickle
 import os, shutil
 from Constants import DATA_FOLDER_PATH
+import stat
 
 debug = {"ids":["123901", "fehwio", "new stuff as well"]}
 
@@ -29,6 +30,12 @@ def clear_voiceflow() -> None:
     pass
 
 def clear_local_files() -> None:
+    for root, dirs, files in os.walk(DATA_FOLDER_PATH):  
+        for dir in dirs:
+            os.chmod(os.path.join(root, dir), stat.S_IRWXU)
+        for file in files:
+            os.chmod(os.path.join(root, file), stat.S_IRWXU)
+
     for filename in os.listdir(DATA_FOLDER_PATH):
         file_path = os.path.join(DATA_FOLDER_PATH, filename)
         try:
@@ -44,4 +51,4 @@ def clear_local_files() -> None:
 if __name__ == '__main__':
     storeData(debug)
     loadData()
-    # clear_local_files()
+    clear_local_files()
