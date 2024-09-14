@@ -27,6 +27,23 @@ if __name__ == '__main__':
     app.run(use_reloader=True, port=5525, threaded=True, host="0.0.0.0", debug=True)
     
 
+def delete_files_from_voiceflow(document_ids: [str]) -> None:
+    # get the API key from the .env file
+    dotenv.load_dotenv()
+    VOICEFLOW_API_KEY = os.getenv('VOICEFLOW_API_KEY')
+
+    for document_id in document_ids:
+
+        url = "https://api.voiceflow.com/v1/knowledge-base/docs/{document_id}"
+        headers = {
+            "accept": "application/json",
+            "Authorization": VOICEFLOW_API_KEY
+        }
+
+        response = requests.delete(url, headers=headers)
+        response_data = response.json()
+        print(response_data)
+
 def upload_files_to_voiceflow(directory: str) -> [str]:
     # get the API key from the .env file
     dotenv.load_dotenv()
@@ -61,3 +78,21 @@ def upload_files_to_voiceflow(directory: str) -> [str]:
     responses = [response['data']['documentID'] for response in responses]
 
     return responses
+
+
+def get_list_of_documents() -> [str]:
+    # get the API key from the .env file
+    dotenv.load_dotenv()
+    VOICEFLOW_API_KEY = os.getenv('VOICEFLOW_API_KEY')
+
+    url = "https://api.voiceflow.com/v1/knowledge-base/docs"
+    headers = {
+        "accept": "application/json",
+        "Authorization": VOICEFLOW_API_KEY
+    }
+
+    response = requests.get(url, headers=headers)
+    response_data = response.json()
+    document_ids = [doc['documentID'] for doc in response_data['data']]
+
+    return document_ids
