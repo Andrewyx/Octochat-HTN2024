@@ -6,6 +6,7 @@ import aiohttp
 import dotenv
 from flask import Flask, request
 from VoiceflowHandler import delete_cache
+from RepoHandler import rename_to_txt
 
 app = Flask(__name__)
 cachedURL  = ""
@@ -23,7 +24,7 @@ def recieve_url() -> None:
 def url_is_cached(url: str) -> bool:
     return cachedURL.strip() == url.strip()
 
-def delete_files_from_voiceflow(document_ids: [str]) -> None:
+def delete_files_from_voiceflow(document_ids: list[str]) -> None:
     # get the API key from the .env file
     dotenv.load_dotenv()
     VOICEFLOW_API_KEY = os.getenv('VOICEFLOW_API_KEY')
@@ -50,8 +51,9 @@ def upload_files_to_voiceflow(directory: str) -> list[str]:
 
     for (dirpath, dirnames, filenames) in os.walk(directory):
         for filename in filenames:
+            print(filename)
             file_path = os.path.join(dirpath, filename)
-            filename = filename.split('.')[-1] + '.txt'
+            filename = rename_to_txt(filename)
             
             with open(file_path, 'rb') as f:
                 files = {'file': (filename, f, "text/plain")}
@@ -61,9 +63,14 @@ def upload_files_to_voiceflow(directory: str) -> list[str]:
                     "Authorization": VOICEFLOW_API_KEY
                 }
                 
-                response = requests.post(url, headers=headers, files=files)
-                response_data = response.json()
-                responses.append(response_data)
+                try:
+                    response = requests.post(url, headers=headers, files=files)
+                    response_data = response.json()
+                    responses.append(response_data)
+                except Exception as e:
+                    print(e)
+                    responses.append({"code": 500, "data": {"documentID": None}})
+
                 
     for response in responses:
         if 'code' not in response:
@@ -81,17 +88,20 @@ def get_list_of_documents() -> list[str]:
     dotenv.load_dotenv()
     VOICEFLOW_API_KEY = os.getenv('VOICEFLOW_API_KEY')
 
-    url = "https://api.voiceflow.com/v1/knowledge-base/docs"
+    url = "https://api.voiceflow.com/v1/knowledge-base/docs?page=1&limit=100"
     headers = {
         "accept": "application/json",
         "Authorization": VOICEFLOW_API_KEY
     }
 
-    response = requests.get(url, headers=headers)
-    response_data = response.json()
-    document_ids = [doc['documentID'] for doc in response_data['data']]
-
-    return document_ids
+    try:
+        response = requests.get(url, headers=headers)
+        response_data = response.json()
+        document_ids = [doc['documentID'] for doc in response_data['data']]
+        return document_ids
+    except Exception as e:
+        print(e)
+        return []
 
 
 # test endpoint to create
