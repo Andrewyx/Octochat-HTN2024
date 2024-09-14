@@ -3,11 +3,14 @@ import reactLogo from '@/assets/react.svg';
 import wxtLogo from '/wxt.svg';
 import './App.css';
 
+import RepoData from './repoData.tsx'
+
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <>
+      <RepoData/>
       <div>
         <a href="https://wxt.dev" target="_blank">
           <img src={wxtLogo} className="logo" alt="WXT logo" />
