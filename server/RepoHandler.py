@@ -10,8 +10,9 @@ def parse_downloaded_repo() -> None:
 def is_valid_code_file(fileHeader: str) -> bool:
     return True
 
-def rename_to_txt() -> None:
-    pass
+def rename_to_txt(filename) -> str:
+    return filename.split('.')[-1] + '.txt'
+
 
 # Debug
 if __name__ == '__main__':
