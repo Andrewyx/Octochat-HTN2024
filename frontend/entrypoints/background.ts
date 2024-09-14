@@ -1,4 +1,13 @@
 export default defineBackground(() => {
-  console.log('Hello background!', { id: browser.runtime.id });
+  // See https://developer.chrome.com/docs/extensions/develop/concepts/activeTab#invoking-activeTab
+  (browser.action ?? browser.browserAction).onClicked.addListener(
+    async (tab) => {
+      try {
+        const dataUrl = await browser.tabs.captureTab();
+        console.log(dataUrl);
+      } catch (err) {
+        console.error("Cannot get URL current tab", tab, err);
+      }
+    },
+  );
 });
-
