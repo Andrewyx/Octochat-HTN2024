@@ -23,26 +23,22 @@ def recieve_url() -> None:
 def url_is_cached(url: str) -> bool:
     return cachedURL.strip() == url.strip()
 
-if __name__ == '__main__':
-    app.run(use_reloader=True, port=5525, threaded=True, host="0.0.0.0", debug=True)
-    
-
-def delete_files_from_voiceflow(document_ids: list[str]) -> None:
+def delete_files_from_voiceflow(document_ids: [str]) -> None:
     # get the API key from the .env file
     dotenv.load_dotenv()
     VOICEFLOW_API_KEY = os.getenv('VOICEFLOW_API_KEY')
 
     for document_id in document_ids:
 
-        url = "https://api.voiceflow.com/v1/knowledge-base/docs/{document_id}"
+        url = f"https://api.voiceflow.com/v1/knowledge-base/docs/{document_id}"
         headers = {
             "accept": "application/json",
             "Authorization": VOICEFLOW_API_KEY
         }
 
         response = requests.delete(url, headers=headers)
-        response_data = response.json()
-        print(response_data)
+
+    print("All files deleted")
 
 def upload_files_to_voiceflow(directory: str) -> list[str]:
     # get the API key from the .env file
@@ -96,3 +92,22 @@ def get_list_of_documents() -> list[str]:
     document_ids = [doc['documentID'] for doc in response_data['data']]
 
     return document_ids
+
+
+# test endpoint to create
+@app.route("/test1")
+def upload_files() -> str:
+    directory = "./"
+    document_ids = upload_files_to_voiceflow(directory)
+    return str(document_ids)
+
+@app.route("/test2")
+def delete_files() -> str:
+    document_ids = get_list_of_documents()
+    delete_files_from_voiceflow(document_ids)
+    return str(document_ids)
+
+
+if __name__ == '__main__':
+    app.run(use_reloader=True, port=5525, threaded=True, host="0.0.0.0", debug=True)
+    
