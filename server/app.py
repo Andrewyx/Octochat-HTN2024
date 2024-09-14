@@ -40,7 +40,7 @@ def delete_files_from_voiceflow(document_ids: [str]) -> None:
 
     print("All files deleted")
 
-def upload_files_to_voiceflow(directory: str) -> [str]:
+def upload_files_to_voiceflow(directory: str) -> list[str]:
     # get the API key from the .env file
     dotenv.load_dotenv()
     VOICEFLOW_API_KEY = os.getenv('VOICEFLOW_API_KEY')
@@ -76,7 +76,7 @@ def upload_files_to_voiceflow(directory: str) -> [str]:
     return responses
 
 
-def get_list_of_documents() -> [str]:
+def get_list_of_documents() -> list[str]:
     # get the API key from the .env file
     dotenv.load_dotenv()
     VOICEFLOW_API_KEY = os.getenv('VOICEFLOW_API_KEY')
