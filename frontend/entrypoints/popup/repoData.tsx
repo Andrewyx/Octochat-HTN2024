@@ -15,6 +15,7 @@ const RepoData: React.FC = () => {
 
   useEffect(() => {
     const url = window.location.href;
+    console.log(url);
     const info = parseRepoInfo(url);
 
     if (info) {
