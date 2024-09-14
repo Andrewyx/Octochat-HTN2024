@@ -1,5 +1,5 @@
 from Constants import DATA_FOLDER_PATH 
-from git import Repo
+from git import Repo # type: ignore
 
 def get_repo(repo_url) -> None:
     repo = Repo.clone_from(repo_url, DATA_FOLDER_PATH)
