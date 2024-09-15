@@ -16,7 +16,7 @@ cachedURL  = ""
 
 @app.route("/parseurl", methods=['POST'])
 def recieve_url() -> None:
-    url = request.args.get("url")
+    url = request.args.get("url") # print args
     if url == "":
         raise ValueError("Empty URL")
     elif not url_is_cached(url):
