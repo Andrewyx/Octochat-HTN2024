@@ -4,7 +4,10 @@ import { defineConfig } from 'wxt';
 export default defineConfig({
   modules: ['@wxt-dev/module-react'],
   manifest: {
-    permissions: ["activeTab", "downloads"],
+    permissions: ["activeTab", "downloads", "storage"],
     action: {},
+    background: {
+      service_worker: "background.js"
+    }
   },
 });

@@ -3,6 +3,7 @@ import { MdClose, MdOutlineMessage } from "react-icons/md";
 import "./App.css";
 import axios from "axios";
 
+// https://github.com/zach1502/HumanBenchmarkBot
 
 const App = () => {
   const [msgs, setMsgs] = useState<any>([]);
@@ -52,27 +53,28 @@ const App = () => {
   // }
 
   const interact = async (request: any) => {
-    try {
-      const response = await axios.post (
+    chrome.storage.sync.get("VOICEFLOW_API_KEY", function (result) {
+      const apiKey = "VF.DM.66e5c1c0380effe3d506deb7.zq9kiS8nAEfLUcYR";
+      console.log("Using API Key: ", apiKey);
+      // Use the API key in your Axios request
+      axios.post(
         `https://general-runtime.voiceflow.com/state/user/66e57d0592f43d1a82365bbe/interact`,
         { request: request },
         {
           headers: {
-            Authorization: process.env.VOICEFLOW_API_KEY,
-            versionID: "66e57d0592f43d1a82365bbf",
-            accept: "application/json",
+            Authorization: apiKey,
+            "accept": "application/json",
             "content-type": "application/json",
           },
         }
-      );
-
-      let data = response.data;
-      data = data.filter((x: any) => x.type === "text")[0];
-      console.log(data.payload.message);
-      return data.payload.message;
-    } catch (error) {
-      console.error("Error interacting with Voiceflow:", error);
-    }
+      )
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
+    });    
   };
   return (
     <div className="chat-container">

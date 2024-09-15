@@ -9,6 +9,10 @@ export default defineBackground(() => {
       } catch (err) {
         console.error("Cannot get URL current tab", tab, err);
       }
+
+      chrome.storage.sync.set({ VOICEFLOW_API_KEY: "VF.DM.66e5c1c0380effe3d506deb7.zq9kiS8nAEfLUcYR" }, function () {
+        console.log('API key is set.');
+      });
     },
   );
 });
