@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import requests
 import os
@@ -16,20 +16,20 @@ cachedURL  = ""
 
 @app.route("/parseurl", methods=['POST'])
 def recieve_url() -> None:
-    url = request.args.get("url")
+    url = request.json['url']
+
     if url == "":
-        raise ValueError("Empty URL")
+        return jsonify({"error": "No URL provided"}), 400
     elif not url_is_cached(url):
         delete_cache()
         cachedURL = url
         get_repo(cachedURL)
-        upload_files_to_voiceflow(DATA_FOLDER_PATH)
+        document_ids = upload_files_to_voiceflow(DATA_FOLDER_PATH)
+        return jsonify({"message": "Files uploaded successfully", "document_ids": document_ids}), 200
     # ELSE: DO NOT DO ANYTHING AND DO NOT DISPLAY INJECTED BUTTON
+    return jsonify({"message": "URL already cached"}), 200
 
 def url_is_cached(url: str) -> bool:
-    print(chchedURL)
-    print(url)
-
     return cachedURL.strip() == url.strip()
 
 def upload_files_to_voiceflow(directory: str) -> list[str]:
@@ -68,10 +68,11 @@ def upload_files_to_voiceflow(directory: str) -> list[str]:
             response['code'] = 200
 
     responses = [response for response in responses if response['code'] ==  200]
+    document_ids = [response['data']['documentID'] for response in responses]
 
-    responses = [response['data']['documentID'] for response in responses]
+    return document_ids
 
-    return responses
+
 
 
 # test endpoint to create

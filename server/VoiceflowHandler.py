@@ -68,6 +68,9 @@ def clear_voiceflow() -> None:
     delete_files_from_voiceflow(get_list_of_documents())
 
 def clear_local_files() -> None:
+    if not os.path.exists(DATA_FOLDER_PATH):
+        os.makedirs(DATA_FOLDER_PATH)
+
     for root, dirs, files in os.walk(DATA_FOLDER_PATH):  
         for dir in dirs:
             os.chmod(os.path.join(root, dir), stat.S_IRWXU)
