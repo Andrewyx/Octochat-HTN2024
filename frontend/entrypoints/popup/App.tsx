@@ -6,6 +6,8 @@ import axios from "axios";
 const App = () => {
   const [msgs, setMsgs] = useState<any>([]);
   const [curInput, setCurInput] = useState("");
+  const [showInitialMessage, setShowInitialMessage] = useState(true);
+  const [showDownloadButton, setShowDownloadButton] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Simulating a bot response after the user sends a message
@@ -20,6 +22,9 @@ const App = () => {
   const sendMessage = async () => {
     if (curInput.trim() === "") return;
 
+    setShowInitialMessage(false);
+
+    setShowDownloadButton(/https?:\/\/[^\s]+/.test(curInput)); // check if the message contains a URL
     const userMsg = `You: ${curInput}`;
     setMsgs((prev: any) => [...prev, userMsg]);
     console.log(curInput);
@@ -34,8 +39,19 @@ const App = () => {
     // const botResponse = await getBotResponse(curInput);
     setMsgs((prev: any) => [...prev, vfResponseCur]);
 
+    setShowDownloadButton(false);
+
     inputRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  // const checkGithubURL = () => {
+  //   const regex = /^https:\/\/github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+$/;
+  //   if (regex.test(curInput)) {
+  //     setValidationMessage("Valid GitHub repository URL.");
+  //   } else {
+  //     setValidationMessage("Invalid GitHub repository URL.");
+  //   }
+  // }
 
   const interact = async (request: any) => {
     try {
@@ -63,15 +79,18 @@ const App = () => {
   return (
     <div className="chat-container">
       <div className="chat-header">
+        <span className="title">Octochat</span>
         <MdClose size={24} className="close-icon" />
-        <div className="header-text">
-          <span className="cloud-icon">
-            <img src="/icon/16.png" />
-          </span>
-          Ask me anything about this repository!
-        </div>
       </div>
       <div className="chat-window">
+        {showInitialMessage &&
+          <div className="header-text">
+            <span className="cloud-icon">
+              <img src="/icon/16.png" />
+            </span>
+            <p>Ask me anything about this repository!</p>
+          </div>
+        }
         {msgs.map((msg: any, index: number) => (
           <div key={index} className="message">
             {msg}
@@ -87,9 +106,14 @@ const App = () => {
           placeholder="Type your message..."
           className="input-box"
         />
+        {showDownloadButton ? (
+          <button className="download-button" onClick={() => alert('Repo uploaded!')}>
+            Validate
+          </button>
+        ) : (
         <button className="send-button" onClick={sendMessage}>
-          <MdOutlineMessage size={24} />
-        </button>
+          Enter
+        </button>)}
       </div>
     </div>
   );

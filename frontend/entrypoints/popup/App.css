@@ -1,8 +1,12 @@
+body {
+  align-items: center;
+}
+
 .chat-container {
   position: flex;
   bottom: 20px;
-  right: 20px;
-  width: 300px;
+  width: 327px;
+  height: 100%;
   border: 1px solid #ccc;
   border-radius: 8px;
   background: white;
@@ -15,9 +19,11 @@
 .chat-header {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   padding: 10px;
   background-color: #5e4a8a;
   color: white;
+  font-size: 16px;
 }
 
 .close-icon {
@@ -36,14 +42,28 @@
   border-radius: 50%;
   padding: 5px;
   margin-right: 10px;
-  width: 30px;
-  height: 30px;
+  display: block;
 }
 
 .chat-window {
   padding: 10px;
   height: 200px;
   overflow-y: auto;
+  background-color: #f4f4f8;
+}
+
+.download-button {
+  background-color: #b14145;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.download-button:hover {
+  background-color: #71272a; 
 }
 
 .message {
@@ -69,122 +89,19 @@
 
 .send-button {
   border: none;
-  background-color: #805ad5;
-  border-radius: 50%;
-  width: 40px;
+  background: linear-gradient(135deg, #745c8c 0%, #211B89 100%);
+  border-radius: 15%;
+  width: 60px;
   height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
   cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
 }
 
 .send-button:hover {
-  background-color: #6b46c1;
-}
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #54bc4ae0);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-.chat-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  width: 100%;
-  justify-content: space-between;
-  background-color: #f0f0f0;
-}
-
-.chat-window {
-  flex-grow: 1;
-  padding: 20px;
-  overflow-y: auto;
-  background-color: #fff;
-  border: 1px solid #ccc;
-}
-
-.message {
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.message:nth-child(even) {
-  background-color: #e1f5fe;
-  text-align: left;
-}
-
-.message:nth-child(odd) {
-  background-color: #fce4ec;
-  text-align: right;
-}
-
-.input-container {
-  display: flex;
-  padding: 10px;
-  background-color: #fff;
-  border-top: 1px solid #ccc;
-}
-
-.input-box {
-  flex-grow: 1;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  outline: none;
-}
-
-.send-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px;
-  margin-left: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.send-button:hover {
-  background-color: #0056b3;
+  background: linear-gradient(135deg, #6f4785 0%, #120e50 100%);
 }
