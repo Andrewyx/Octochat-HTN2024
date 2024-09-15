@@ -1,16 +1,17 @@
 export default defineContentScript({
+<<<<<<< HEAD
   matches: ['*://*.github.com/*/*'],
   main() {
     console.log('Hello content.');
-    (browser.action ?? browser.browserAction).onClicked.addListener(
-      async (tab) => {
-        try {
-          const dataUrl = await browser.tabs.captureTab();
-          console.log(dataUrl);
-        } catch (err) {
-          console.error("Cannot get URL current tab", tab, err);
-        }
-      },
-    );
+    console.log(window.location.href);
+=======
+  matches: ["*://*/*"],
+  async main() {
+    console.log("Injecting script...");
+    await injectScript('/injected.js', {
+      keepInDom: true,
+    });
+    console.log("Done!");
+>>>>>>> f36fe19 (loading in chat)
   },
 });

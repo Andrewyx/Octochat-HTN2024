@@ -24,7 +24,7 @@ const RepoData: React.FC = () => {
     } else {
       setRepoInfo(null);
     }
-  }, []);
+  }, [window.location.href]);
 
   return (
     <div>

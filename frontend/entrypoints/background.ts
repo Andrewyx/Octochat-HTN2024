@@ -5,6 +5,7 @@ export default defineBackground(() => {
       try {
         const dataUrl = await browser.tabs.captureTab();
         console.log(dataUrl);
+        console.log('something')
       } catch (err) {
         console.error("Cannot get URL current tab", tab, err);
       }

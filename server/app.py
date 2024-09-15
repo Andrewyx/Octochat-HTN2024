@@ -24,7 +24,7 @@ def recieve_url() -> None:
 def url_is_cached(url: str) -> bool:
     return cachedURL.strip() == url.strip()
 
-def delete_files_from_voiceflow(document_ids: [str]) -> None:
+def delete_files_from_voiceflow(document_ids: list[str]) -> None:
     # get the API key from the .env file
     dotenv.load_dotenv()
     VOICEFLOW_API_KEY = os.getenv('VOICEFLOW_API_KEY')
