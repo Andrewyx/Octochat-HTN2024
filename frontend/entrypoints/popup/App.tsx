@@ -36,6 +36,8 @@ const App = () => {
     setMsgs((prev:any) => [...prev, userMsg]);  // Add user message immediately
 
     const botResponse = await interact({ type: "text", payload: curInput });
+
+    console.log(botResponse);
     const botMsg = { text: botResponse, sender: 'bot' };
     setMsgs((prev:any) => [...prev, botMsg]);
     console.log(curInput);
@@ -55,29 +57,36 @@ const App = () => {
   // }
 
   const interact = async (request: any) => {
-    chrome.storage.sync.get("VOICEFLOW_API_KEY", function (result) {
-      const apiKey = "VF.DM.66e5c1c0380effe3d506deb7.zq9kiS8nAEfLUcYR";
-      console.log("Using API Key: ", apiKey);
-      // Use the API key in your Axios request
-      axios.post(
-        `https://general-runtime.voiceflow.com/state/user/66e57d0592f43d1a82365bbe/interact`,
-        { request: request },
-        {
-          headers: {
-            Authorization: process.env.REACT_APP_VOICEFLOW_API_KEY,
-            versionID: "66e57d0592f43d1a82365bbf",
-            accept: "application/json",
-            "content-type": "application/json",
-          },
-        }
-      )
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.error("Error:", error);
-      });
-    });    
+    let somedata;
+    const apiKey = "VF.DM.66e5c1c0380effe3d506deb7.zq9kiS8nAEfLUcYR";
+    console.log("Using API Key: ", apiKey);
+    // Use the API key in your Axios request
+    somedata = axios.post(
+      `https://general-runtime.voiceflow.com/state/user/66e57d0592f43d1a82365bbe/interact`,
+      { request: request },
+      {
+        headers: {
+          Authorization: apiKey,
+          versionID: "66e57d0592f43d1a82365bbf",
+          accept: "application/json",
+          "content-type": "application/json",
+        },
+      }
+    )
+    .then(response => {
+      console.log(response.data);
+      let data = response.data;
+      data = data.filter((x: any) => x.type === "text")[0];
+      console.log(data.payload.message);
+      return data.payload.message;
+    })
+    .catch(error => {
+      console.error("Error:", error);
+    });
+
+
+  
+    return somedata;
   };
   return (
     <div className="chat-container">
