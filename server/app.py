@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 import requests
 import os
 import asyncio
@@ -10,6 +11,7 @@ from RepoHandler import rename_to_txt, get_repo
 from Constants import DATA_FOLDER_PATH
 
 app = Flask(__name__)
+CORS(app)
 cachedURL  = ""
 
 @app.route("/parseurl", methods=['POST'])

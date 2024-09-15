@@ -9,7 +9,7 @@ export default defineContentScript({
 
 async function sendURL(url: string) {
   try {
-    const response = await fetch('http://localhost:5525', {
+    const response = await fetch('http://localhost:5525/parseurl', {
       method: 'POST',
       body: JSON.stringify({
         url: url
