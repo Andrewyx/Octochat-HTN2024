@@ -87,6 +87,10 @@ body {
   margin-right: 8px;
 }
 
+.title {
+  font-size: 16px;
+}
+
 .send-button {
   border: none;
   background: linear-gradient(135deg, #745c8c 0%, #211B89 100%);

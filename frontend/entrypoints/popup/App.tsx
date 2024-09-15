@@ -9,6 +9,8 @@ const App = () => {
   const [curInput, setCurInput] = useState("");
   const [showInitialMessage, setShowInitialMessage] = useState(true);
   const [showDownloadButton, setShowDownloadButton] = useState(false);
+  const [showPanel, setShowPanel] = useState();
+
   const inputRef = useRef<HTMLInputElement>(null);
   
   // Simulating a bot response after the user sends a message
@@ -82,7 +84,11 @@ const App = () => {
     <div className="chat-container">
       <div className="chat-header">
         <span className="title">Octochat</span>
-        <MdClose size={24} className="close-icon" />
+        <MdClose 
+          onClick={() => {}}
+          size={24} 
+          className="close-icon" 
+        />
       </div>
       <div className="chat-window">
         {showInitialMessage &&
