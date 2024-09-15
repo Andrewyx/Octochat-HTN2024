@@ -6,7 +6,8 @@ import aiohttp
 import dotenv
 from flask import Flask, request
 from VoiceflowHandler import delete_cache
-from RepoHandler import rename_to_txt
+from RepoHandler import rename_to_txt, get_repo
+from Constants import DATA_FOLDER_PATH
 
 app = Flask(__name__)
 cachedURL  = ""
@@ -19,6 +20,8 @@ def recieve_url() -> None:
     elif not url_is_cached(url):
         delete_cache()
         cachedURL = url
+        get_repo(cachedURL)
+        upload_files_to_voiceflow(DATA_FOLDER_PATH)
     # ELSE: DO NOT DO ANYTHING AND DO NOT DISPLAY INJECTED BUTTON
 
 def url_is_cached(url: str) -> bool:
@@ -105,17 +108,17 @@ def get_list_of_documents() -> list[str]:
 
 
 # test endpoint to create
-@app.route("/test1")
-def upload_files() -> str:
-    directory = "./"
-    document_ids = upload_files_to_voiceflow(directory)
-    return str(document_ids)
+# @app.route("/test1")
+# def upload_files() -> str:
+#     directory = "./"
+#     document_ids = upload_files_to_voiceflow(directory)
+#     return str(document_ids)
 
-@app.route("/test2")
-def delete_files() -> str:
-    document_ids = get_list_of_documents()
-    delete_files_from_voiceflow(document_ids)
-    return str(document_ids)
+# @app.route("/test2")
+# def delete_files() -> str:
+#     document_ids = get_list_of_documents()
+#     delete_files_from_voiceflow(document_ids)
+#     return str(document_ids)
 
 
 if __name__ == '__main__':
