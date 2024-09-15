@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { MdOutlineMessage } from "react-icons/md";
+import { MdClose, MdOutlineMessage } from "react-icons/md";
 import "./App.css";
 import axios from "axios";
 
@@ -62,6 +62,15 @@ const App = () => {
   };
   return (
     <div className="chat-container">
+      <div className="chat-header">
+        <MdClose size={24} className="close-icon" />
+        <div className="header-text">
+          <span className="cloud-icon">
+            <img src="/icon/16.png" />
+          </span>
+          Ask me anything about this repository!
+        </div>
+      </div>
       <div className="chat-window">
         {msgs.map((msg: any, index: number) => (
           <div key={index} className="message">
@@ -87,5 +96,3 @@ const App = () => {
 };
 
 export default App;
-
-

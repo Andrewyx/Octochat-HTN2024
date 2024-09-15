@@ -26,8 +26,7 @@ def delete_cache() -> None:
     clear_local_files()
 
 def clear_voiceflow() -> None:
-    # TODO: For ZACH
-    pass
+    delete_files_from_voiceflow(get_list_of_documents())
 
 def clear_local_files() -> None:
     for root, dirs, files in os.walk(DATA_FOLDER_PATH):  
