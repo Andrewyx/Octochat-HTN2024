@@ -2,7 +2,7 @@ import pickle
 import os, shutil
 from Constants import DATA_FOLDER_PATH
 import stat
-
+from app import delete_files_from_voiceflow, get_list_of_documents
 debug = {"ids":["123901", "fehwio", "new stuff as well"]}
 
 def storeData(ids: dict) -> None:    
