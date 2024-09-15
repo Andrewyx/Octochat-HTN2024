@@ -64,8 +64,9 @@ const App = () => {
         { request: request },
         {
           headers: {
-            Authorization: apiKey,
-            "accept": "application/json",
+            Authorization: process.env.REACT_APP_VOICEFLOW_API_KEY,
+            versionID: "66e57d0592f43d1a82365bbf",
+            accept: "application/json",
             "content-type": "application/json",
           },
         }

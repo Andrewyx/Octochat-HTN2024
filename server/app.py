@@ -73,8 +73,6 @@ def upload_files_to_voiceflow(directory: str) -> list[str]:
     return document_ids
 
 
-
-
 # test endpoint to create
 # @app.route("/test1")
 # def upload_files() -> str:
