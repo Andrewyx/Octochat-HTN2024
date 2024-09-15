@@ -9,6 +9,8 @@ const App = () => {
   const [curInput, setCurInput] = useState("");
   const [showInitialMessage, setShowInitialMessage] = useState(true);
   const [showDownloadButton, setShowDownloadButton] = useState(false);
+  const [showPanel, setShowPanel] = useState();
+
   const inputRef = useRef<HTMLInputElement>(null);
   
   // Simulating a bot response after the user sends a message
@@ -27,21 +29,15 @@ const App = () => {
     setShowInitialMessage(false);
 
     setShowDownloadButton(/https?:\/\/[^\s]+/.test(curInput)); // check if the message contains a URL
-    const userMsg = `You: ${curInput}`;
-    setMsgs((prev: any) => [...prev, userMsg]);
+    const userMsg = { text: `You: ${curInput}`, sender: 'user' };
+    setMsgs((prev:any) => [...prev, userMsg]);  // Add user message immediately
+
+    const botResponse = await interact({ type: "text", payload: curInput });
+    const botMsg = { text: `Bot: ${botResponse}`, sender: 'bot' };
+    setMsgs((prev:any) => [...prev, botMsg]);
     console.log(curInput);
 
-    const vfResponseCur = await interact({
-      type: "text",
-      payload: curInput,
-    });
-
     setCurInput("");
-
-    // const botResponse = await getBotResponse(curInput);
-    setMsgs((prev: any) => [...prev, vfResponseCur]);
-
-    setShowDownloadButton(false);
 
     inputRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -57,7 +53,7 @@ const App = () => {
 
   const interact = async (request: any) => {
     try {
-      const response = await axios.post(
+      const response = await axios.post (
         `https://general-runtime.voiceflow.com/state/user/66e57d0592f43d1a82365bbe/interact`,
         { request: request },
         {
@@ -82,20 +78,29 @@ const App = () => {
     <div className="chat-container">
       <div className="chat-header">
         <span className="title">Octochat</span>
-        <MdClose size={24} className="close-icon" />
+        <MdClose 
+          onClick={() => {}}
+          size={24} 
+          className="close-icon" 
+        />
       </div>
       <div className="chat-window">
         {showInitialMessage &&
           <div className="header-text">
             <span className="cloud-icon">
-              <img src="/icon/16.png" />
+              <img src="/icon/32.png" />
             </span>
             <p>Ask me anything about this repository!</p>
           </div>
         }
         {msgs.map((msg: any, index: number) => (
           <div key={index} className="message">
-            {msg}
+            {msg.sender === 'bot' && (
+            <span className="message-icon">
+                <img src="/icon/48.png" alt="Octo Logo" />
+            </span>
+            )}
+            {msg.text}
           </div>
         ))}
         <div ref={inputRef}></div>
@@ -109,7 +114,10 @@ const App = () => {
           className="input-box"
         />
         {showDownloadButton ? (
-          <button className="download-button" onClick={() => alert('Repo uploaded!')}>
+          <button className="download-button" onClick={() => {
+            setShowDownloadButton(false)
+            alert('Repo uploaded!')
+          }}>
             Validate
           </button>
         ) : (
