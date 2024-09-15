@@ -11,6 +11,8 @@ const App = () => {
   const [showDownloadButton, setShowDownloadButton] = useState(false);
   const [showPanel, setShowPanel] = useState();
 
+  const [isVisible, setIsVisible] = useState(true); 
+
   const inputRef = useRef<HTMLInputElement>(null);
   
   // Simulating a bot response after the user sends a message
@@ -29,11 +31,11 @@ const App = () => {
     setShowInitialMessage(false);
 
     setShowDownloadButton(/https?:\/\/[^\s]+/.test(curInput)); // check if the message contains a URL
-    const userMsg = { text: `You: ${curInput}`, sender: 'user' };
+    const userMsg = { text: curInput, sender: 'user' };
     setMsgs((prev:any) => [...prev, userMsg]);  // Add user message immediately
 
     const botResponse = await interact({ type: "text", payload: curInput });
-    const botMsg = { text: `Bot: ${botResponse}`, sender: 'bot' };
+    const botMsg = { text: botResponse, sender: 'bot' };
     setMsgs((prev:any) => [...prev, botMsg]);
     console.log(curInput);
 
@@ -79,7 +81,7 @@ const App = () => {
       <div className="chat-header">
         <span className="title">Octochat</span>
         <MdClose 
-          onClick={() => {}}
+          onClick={() => setIsVisible(false)}
           size={24} 
           className="close-icon" 
         />
@@ -88,13 +90,13 @@ const App = () => {
         {showInitialMessage &&
           <div className="header-text">
             <span className="cloud-icon">
-              <img src="/icon/32.png" />
+              <img src="/icon/48.png" />
             </span>
-            <p>Ask me anything about this repository!</p>
+            <p className="p1">Ask me anything about this repository!</p>
           </div>
         }
         {msgs.map((msg: any, index: number) => (
-          <div key={index} className="message">
+          <div key={index} className={`message ${msg.sender === 'user' ? 'user' : 'bot'}`}>
             {msg.sender === 'bot' && (
             <span className="message-icon">
                 <img src="/icon/48.png" alt="Octo Logo" />
@@ -110,7 +112,7 @@ const App = () => {
         <input
           value={curInput}
           onChange={(e) => setCurInput(e.target.value)}
-          placeholder="Type your message..."
+          placeholder="Ask a question..."
           className="input-box"
         />
         {showDownloadButton ? (

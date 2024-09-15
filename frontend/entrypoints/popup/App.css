@@ -2,6 +2,11 @@ body {
   align-items: center;
 }
 
+.p1 {
+  font-size: 13px;
+  font-weight: 400;
+}
+
 .chat-container {
   position: flex;
   bottom: 20px;
@@ -45,6 +50,11 @@ body {
   display: block;
 }
 
+.cloud-icon img {
+  width: 32px;
+  height: 32px;
+}
+
 .chat-window {
   padding: 10px;
   height: 300px;
@@ -72,19 +82,24 @@ body {
   text-align: right;
   margin: 5px 0;
   padding: 5px 10px;
-  border-radius: 12px;
   background-color: #f4f4f8;
+  width: 300px;
 }
 
 .message.user {
   justify-content: flex-end;
   text-align: right;
-  flex-direction: row-reverse;
+  width: fit-content;
+  margin: 2px;
+  border-radius: 12px 12px 0px 12px;
+  background-color: #745c8c;
+  color: white;
 }
 
 .message.bot {
   justify-content: flex-start;
   text-align: left;
+  border-radius: 12px 0px 12px 12px;
 }
 
 .message-icon {
@@ -112,6 +127,7 @@ body {
 
 .title {
   font-size: 16px;
+  font-weight: 700;
 }
 
 .send-button {
