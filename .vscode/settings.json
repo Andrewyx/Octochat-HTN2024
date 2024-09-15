@@ -1,0 +1,5 @@
+{
+    "python.analysis.autoImportCompletions": true,
+    "python.languageServer": "Pylance",
+    "python.defaultInterpreterPath": "C:\\Users\\andre\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+}

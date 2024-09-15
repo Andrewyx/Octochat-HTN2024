@@ -3,13 +3,14 @@ import { MdClose, MdOutlineMessage } from "react-icons/md";
 import "./App.css";
 import axios from "axios";
 
+
 const App = () => {
   const [msgs, setMsgs] = useState<any>([]);
   const [curInput, setCurInput] = useState("");
   const [showInitialMessage, setShowInitialMessage] = useState(true);
   const [showDownloadButton, setShowDownloadButton] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-
+  
   // Simulating a bot response after the user sends a message
   // const getBotResponse = (userMsg: string) => {
   //   return new Promise((resolve) => {
@@ -20,6 +21,7 @@ const App = () => {
   // };
 
   const sendMessage = async () => {
+    console.log(window.location.href);
     if (curInput.trim() === "") return;
 
     setShowInitialMessage(false);

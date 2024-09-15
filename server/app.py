@@ -27,23 +27,6 @@ def recieve_url() -> None:
 def url_is_cached(url: str) -> bool:
     return cachedURL.strip() == url.strip()
 
-def delete_files_from_voiceflow(document_ids: list[str]) -> None:
-    # get the API key from the .env file
-    dotenv.load_dotenv()
-    VOICEFLOW_API_KEY = os.getenv('VOICEFLOW_API_KEY')
-
-    for document_id in document_ids:
-
-        url = f"https://api.voiceflow.com/v1/knowledge-base/docs/{document_id}"
-        headers = {
-            "accept": "application/json",
-            "Authorization": VOICEFLOW_API_KEY
-        }
-
-        response = requests.delete(url, headers=headers)
-
-    print("All files deleted")
-
 def upload_files_to_voiceflow(directory: str) -> list[str]:
     # get the API key from the .env file
     dotenv.load_dotenv()
@@ -86,27 +69,6 @@ def upload_files_to_voiceflow(directory: str) -> list[str]:
     return responses
 
 
-def get_list_of_documents() -> list[str]:
-    # get the API key from the .env file
-    dotenv.load_dotenv()
-    VOICEFLOW_API_KEY = os.getenv('VOICEFLOW_API_KEY')
-
-    url = "https://api.voiceflow.com/v1/knowledge-base/docs?page=1&limit=100"
-    headers = {
-        "accept": "application/json",
-        "Authorization": VOICEFLOW_API_KEY
-    }
-
-    try:
-        response = requests.get(url, headers=headers)
-        response_data = response.json()
-        document_ids = [doc['documentID'] for doc in response_data['data']]
-        return document_ids
-    except Exception as e:
-        print(e)
-        return []
-
-
 # test endpoint to create
 # @app.route("/test1")
 # def upload_files() -> str:
@@ -123,4 +85,5 @@ def get_list_of_documents() -> list[str]:
 
 if __name__ == '__main__':
     app.run(use_reloader=True, port=5525, threaded=True, host="0.0.0.0", debug=True)
+    #flask run -h localhost -p 5525
     
