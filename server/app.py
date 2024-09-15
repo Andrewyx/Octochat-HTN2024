@@ -27,6 +27,9 @@ def recieve_url() -> None:
     # ELSE: DO NOT DO ANYTHING AND DO NOT DISPLAY INJECTED BUTTON
 
 def url_is_cached(url: str) -> bool:
+    print(chchedURL)
+    print(url)
+
     return cachedURL.strip() == url.strip()
 
 def upload_files_to_voiceflow(directory: str) -> list[str]:
